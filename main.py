@@ -164,7 +164,7 @@ servos.set_angle(GRIPPER, 80)
 servos.set_angle(GRIPPER, 45)
 
 try:
-    ip = connect_wifi("***REMOVED***", "***REMOVED***")
+    ip = connect_wifi("SSID", "PASSWORD")
     start_server(command_handler)
 except:
     servos.stop(0)
