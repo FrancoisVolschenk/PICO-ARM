@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Robot Arm Control</title>
+        <style>
+            button {
+                background-color: darkred;
+                border-radius: 5px;
+                color: white;
+                padding: 10px 20px;
+                margin: 5px;
+                font-size: 16px;
+            }
+        </style>
+        <script>
+            function sendCommand(cmd) {
+                fetch(`/cmd?${cmd}`)
+                    .then(response => response.json())
+                    .then(data => console.log("Command sent:", cmd, data))
+                    .catch(error => console.error("Error sending command:", cmd, error));
+            }
+        </script>
+    </head>
+    <body style="background-color: dimgray;">
+        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <h1 style="background-color:lightslategrey;">Control Panel</h1>
+            <div style="display: flex; flex-direction: column; justify-content: center;">
+                <button onclick="sendCommand('w')">Up</button>
+            </div>
+            <div style="display: flex; flex-direction: row;">
+                <button onclick="sendCommand('a')">Left</button>
+                <button onclick="sendCommand('d')">Right</button>
+            </div>
+            <div style="display: flex; flex-direction: column; justify-content: center;">
+                <button onclick="sendCommand('s')">Down</button>
+            </div>
+
+            <br><br>
+            <div style="display: flex; flex-direction: column;">
+                <button onclick="sendCommand('h')">Elbow Up</button>
+                <button onclick="sendCommand('j')">Elbow Down</button>
+            </div>
+            <br>
+            <button onclick="sendCommand('e')">Toggle Gripper</button>
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; border: solid; border-radius: 5px; width: 50%;">
+                <input type="radio" id="stop" name="speed" value="0" onchange="sendCommand(`speed${this.value}`)">
+                <label for="stop">STOP</label><br>
+                <input type="radio" id="slow" name="speed" value="1" onchange="sendCommand(`speed${this.value}`)">
+                <label for="slow">SLOW</label><br>
+                <input type="radio" id="medium" name="speed" value="3" onchange="sendCommand(`speed${this.value}`)">
+                <label for="medium">MEDIUM</label>
+                <input type="radio" id="fast" name="speed" value="2" onchange="sendCommand(`speed${this.value}`)">
+                <label for="fast">FAST</label>
+            </div>
+        </div>
+    </body>
+</html>
